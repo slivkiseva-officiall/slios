@@ -18,9 +18,9 @@ class System:
 		class System:
 			name = "slios"
 			ver = "5"
-			build = "0014"
+			build = "0015"
 			name_ver = "2512"
-			code_name = "under construction" 
+			code_name = "pre-realise" 
 	
 	@staticmethod
 	def wait(time_for_sleep):
@@ -40,6 +40,32 @@ class System:
 		print(f"{enter_msg}...")
 # kernel class
 
+class Games:
+	class GuessNumber:
+		@staticmethod
+		def start():
+			print("Привет! я загадал число от 1 до 100, твоя задача угадать за 5 попыток.")
+			winner_num = random.randint(1, 100)
+			guesses = 0
+			while True:
+				print("введите число:", end="")
+				try:
+					guess = int(input())
+					if guess == winner_num:
+						print("ты выйграл!")
+						break
+					elif guess > winner_num:
+						print("загаданное число меньше вашего")
+					elif guess < winner_num:
+						print("загаданное число больше вашего")
+					guesses += 1
+				except:
+					print("введите именно число!")
+			print("спасибо за игру!")
+	
+	def app(self):
+		pass
+		
 class SystemSettings:
 	show_date = True
 	old_taskbar = False
@@ -282,6 +308,7 @@ usingInSystem = False
 filemanager = Filemanager()
 console = Console()
 notes = Notes()
+games_app = Games()
 
 custom_vars = {
 	"notes": tasks,
@@ -312,8 +339,6 @@ while running:
 		usingUser = root
 		usingInSystem = True
 	while usingInSystem:
-		if root != "root":
-			root = "root"
 		if usingUser == None:
 			break
 		System.cs()
@@ -346,7 +371,7 @@ while running:
 				case "ilyaOS":
 					username = "ilyaUser 3.0"
 				case "woapOS": 
-					username = "WoapOS_get"
+					user3name = "WoapOS_get"
 				case "namedOS":
 					username = "pls_name_OS"
 		elif desktop == "пуск":
@@ -402,6 +427,23 @@ while running:
 							buffer = input()
 							if buffer == "выйти":
 								break
+							elif buffer == "убрать":
+								removing_program = input("введите что вы хотите удалить")
+								if removing_program in taskbar_preview:
+									taskbar_preview.remove(removing_program)
+								else:
+									System.show_error("найденой программы в hotbar не было")
+							elif buffer == "применить":
+								hotbar = hotbar_preview
+							elif buffer == "добавить":
+								hotbar_preview.pop(len(hotbar_preview) -1)
+								print("можно добавить: файлы, заметки, консоль")
+								add_program = input(enter)
+								if add_program in ("файлы", "заметки", "консоль"):
+									hotbar_preview.append(add_program)
+								else:
+									System.show_error("невозможно добавить так как это не приложение")
+								hotbar_preview.append("$time(%H:%M)")
 					elif settings == "другие настройки":
 						print(f"1. отключить/включить отображение даты на рабочем столе ({sys_set.show_date})")
 						print(f"2. Включить/отключить старый taskbar ({sys_set.old_taskbar})")
